@@ -75,9 +75,10 @@ export function WalletProvider(props) {
   };
 
   const connect = async () => {
-    if (window.phantom) {
+    if ("phantom" in window) {
       try {
-        const resp = await provider.connect();
+        let myprovider = window.phantom?.solana;
+        const resp = await myprovider.connect();
         setPublicKey(resp.publicKey);
         getProvider();
         getBalance(resp.publicKey);
