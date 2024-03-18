@@ -41,8 +41,7 @@ export function WalletProvider(props) {
   };
 
   const getBalance = async (address = provider?.publicKey) => {
-    console.log("getting balance...");
-    console.log(address);
+    if (!provider) return;
     await api
       .crud("POST", "getbhoomibalance", {
         address: provider?.publicKey?.toString(),
@@ -56,7 +55,7 @@ export function WalletProvider(props) {
   };
 
   const connectSolflare = async () => {
-    if (provider) {
+    if (window.solflare) {
       try {
         const solflareWallet = new SolflareWallet();
         solflareWallet.on("connect", () => {
@@ -76,7 +75,7 @@ export function WalletProvider(props) {
   };
 
   const connect = async () => {
-    if (provider) {
+    if (window.phantom) {
       try {
         const resp = await provider.connect();
         setPublicKey(resp.publicKey);
