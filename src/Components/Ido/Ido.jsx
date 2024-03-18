@@ -3,8 +3,10 @@ import Navbar from "../Navbar/Navbar";
 import "./Ido.css";
 import { useWallet } from "../../Contexts/walletContext";
 import Loading from "./loading";
+import useAPI from "../useAPI";
 
 const Ido = () => {
+  const api = useAPI();
   const wallet = useWallet();
   const [sol, setSol] = useState("");
   const [bhoomi, setBhoomi] = useState("");
