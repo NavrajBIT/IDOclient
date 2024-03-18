@@ -45,6 +45,7 @@ export function WalletProvider(props) {
 
   const getBalance = async (address = provider?.publicKey) => {
     if (!provider) return;
+
     await api
       .crud("POST", "getbhoomibalance", {
         address: provider?.publicKey?.toString(),
@@ -63,6 +64,7 @@ export function WalletProvider(props) {
           balancewithoutdecimal.length - 2,
           balancewithoutdecimal.length
         );
+        if (predecimal === ".") predecimal = "0.";
         setBhoomibalance(`${predecimal}.${postdecimal}`);
       })
       .catch((err) => console.log(err));

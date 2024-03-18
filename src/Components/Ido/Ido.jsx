@@ -4,21 +4,47 @@ import "./Ido.css";
 import { useWallet } from "../../Contexts/walletContext";
 import Loading from "./loading";
 import useAPI from "../useAPI";
+import { useNavigate } from "react-router-dom";
 
 const Ido = () => {
   const api = useAPI();
   const wallet = useWallet();
+  const navigate = useNavigate();
   const [sol, setSol] = useState("");
   const [bhoomi, setBhoomi] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [conversion, setConversion] = useState(null);
   useEffect(() => {
     if (isNaN(parseFloat(sol))) setBhoomi(0);
     else {
-      setBhoomi(parseFloat(sol) / 10);
+      if (!conversion) setBhoomi(0);
+      else {
+        setBhoomi(parseFloat(sol) * parseFloat(conversion) * 10);
+      }
     }
-  }, [sol]);
+  }, [sol, conversion]);
 
-  const isValid = !isNaN(sol) && sol > 0 && !isNaN(bhoomi) && bhoomi > 0;
+  useEffect(() => {
+    // getExchangeRate();
+  }, []);
+
+  const getExchangeRate = async () => {
+    setIsLoading(true);
+    await fetch(
+      "https://min-api.cryptocompare.com/data/pricemulti?fsyms=SOL&tsyms=SOL,USD&api_key=a0d74da5182505e471796936416d849166115c9f413ddad7f7e2caff213b0ae5"
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        console.log(`SOL exchange rate = ${res["SOL"]["USD"]}`);
+        setConversion(parseFloat(res["SOL"]["USD"]));
+      })
+      .catch((err) => console.log(err));
+    setIsLoading(false);
+  };
+
+  const isValid =
+    !isNaN(sol) && sol > 0 && !isNaN(bhoomi) && bhoomi > 0 && conversion;
 
   return (
     <>
@@ -79,11 +105,13 @@ const Ido = () => {
               style={{
                 width: wallet?.supplydata
                   ? `${wallet.supplydata.percentage}%`
-                  : "99%",
+                  : "0%",
               }}
             >
               {/* <div class="progress-bar"></div> */}
-              <div class="progressSphere"></div>
+              <div class="progressSphere">
+                {wallet?.supplydata ? `${wallet.supplydata.percentage}%` : "0%"}
+              </div>
             </div>
           </div>
 

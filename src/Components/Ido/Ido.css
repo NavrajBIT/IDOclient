@@ -112,12 +112,15 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: #8d82ea;
   right: 0;
-  margin-right: -15px;
+  margin-right: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .infoContainer {
