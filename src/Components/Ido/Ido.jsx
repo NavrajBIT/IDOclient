@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import "./Ido.css";
 import { useWallet } from "../../Contexts/walletContext";
+import Loading from "./loading";
 
 const Ido = () => {
   const wallet = useWallet();
@@ -14,11 +15,15 @@ const Ido = () => {
       setBhoomi(parseFloat(sol) / 10);
     }
   }, [sol]);
+
+  const isValid = !isNaN(sol) && sol > 0;
+
   return (
     <>
       <Navbar />
 
       <div className="bgStyle">
+        {isLoading && <Loading />}
         <section className="idoSection">
           <div className="formContainer">
             <h1 className="containerHead">$BHOOMI Token Sale</h1>
@@ -33,16 +38,48 @@ const Ido = () => {
             <label htmlFor="">Total Bhoomi tokens to be received:</label>
             <input type="text" value={bhoomi} onChange={() => {}} />
 
-            <button
-              onClick={async () => {
-                const tx = await wallet.sendSol(parseFloat(sol));
+            {isValid && (
+              <button
+                onClick={async () => {
+                  setIsLoading(true);
+                  const tx = await wallet
+                    .sendSol(parseFloat(sol))
+                    .then((res) => res)
+                    .catch((err) => null);
+
+                  if (!tx) {
+                    setIsLoading(false);
+                    alert("Transaction Unsuccessfull!");
+                    return;
+                  }
+                  let amount = Number(num.toFixed(2));
+                  await api
+                    .crud("POST", "mintbhoomitoken", {
+                      address: wallet.provider.publicKey.toString(),
+                      amount: amount,
+                      tx: tx,
+                    })
+                    .then((res) =>
+                      alert(
+                        "Mint successfull. Bhoomi tokens will reflect in your wallet shortly."
+                      )
+                    )
+                    .catch((err) => console.log(err));
+                  setIsLoading(false);
+                }}
+              >
+                Buy
+              </button>
+            )}
+
+            <div
+              class="progressContainer"
+              style={{
+                width: wallet?.supplydata
+                  ? `${wallet.supplydata.percentage}%`
+                  : "99%",
               }}
             >
-              Buy
-            </button>
-            <button onClick={() => wallet.getBalance()}>Balance</button>
-
-            <div class="progressContainer">
               {/* <div class="progress-bar"></div> */}
               <div class="progressSphere"></div>
             </div>
@@ -51,7 +88,7 @@ const Ido = () => {
           <div className="infoContainer">
             <div className="balanceContainer">
               <h4 className="containerHead">BHOOMI Balance</h4>
-              <h1>1,00,000</h1>
+              <h1>{wallet.bhoomibalance}</h1>
             </div>
             <div className="detailContainer">
               <h4 className="containerHead">Token Details</h4>
@@ -62,7 +99,7 @@ const Ido = () => {
               <span className="address">
                 <span>Contract Address:</span>
                 <h6 className="value">
-                  Aa5w19iqzLynJ1kcAKQf53LhWSBX9c1dGhSzRJweRUY9
+                  5UmjnxfKkG55E2m6BPAZFaM6hUy6jtEJC9zGgxdqjxKL
                 </h6>
               </span>
               <span>

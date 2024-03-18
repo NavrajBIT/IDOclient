@@ -2,6 +2,8 @@ import SolflareWallet from "@solflare-wallet/sdk";
 import React, { useState, useEffect, useContext } from "react";
 import * as web3 from "@solana/web3.js";
 import useAPI from "../Components/useAPI";
+import * as buffer from "buffer";
+window.Buffer = buffer.Buffer;
 
 const WalletContext = React.createContext();
 
@@ -15,6 +17,7 @@ export function WalletProvider(props) {
   const [publicKey, setPublicKey] = useState(null);
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [solbalance, setSolBalance] = useState(0);
+  const [bhoomibalance, setBhoomibalance] = useState(0);
   const [supplydata, setSupplyData] = useState(null);
 
   let connection = new web3.Connection(web3.clusterApiUrl("devnet"));
@@ -46,11 +49,31 @@ export function WalletProvider(props) {
       .crud("POST", "getbhoomibalance", {
         address: provider?.publicKey?.toString(),
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        let totalBalance = res.balance;
+        let balancewithoutdecimal = totalBalance.substring(
+          0,
+          totalBalance.length - 7
+        );
+        let predecimal = balancewithoutdecimal.substring(
+          0,
+          balancewithoutdecimal.length - 2
+        );
+        let postdecimal = balancewithoutdecimal.substring(
+          balancewithoutdecimal.length - 2,
+          balancewithoutdecimal.length
+        );
+        setBhoomibalance(`${predecimal}.${postdecimal}`);
+      })
       .catch((err) => console.log(err));
     await api
       .crud("GET", "getbhoomisupply")
-      .then((res) => console.log(res))
+      .then((res) => {
+        let avl = res.currentAvailableToMint;
+        let availableTokens = avl.substring(0, avl.length - 9);
+        let percentage = parseInt(parseFloat(availableTokens) / 10000000);
+        setSupplyData({ percentage: percentage, ...res });
+      })
       .catch((err) => console.log(err));
   };
 
@@ -75,6 +98,8 @@ export function WalletProvider(props) {
   };
 
   const connect = async () => {
+    console.log(window.phantom);
+    return;
     if ("phantom" in window) {
       try {
         let myprovider = window.phantom?.solana;
@@ -137,6 +162,8 @@ export function WalletProvider(props) {
     connect,
     connectSolflare,
     getBalance,
+    bhoomibalance,
+    supplydata,
   };
 
   return (
