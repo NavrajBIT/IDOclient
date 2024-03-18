@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@solana/spl-token": "^0.4.1",
+    "@solana/web3.js": "^1.91.1",
+    "@solflare-wallet/sdk": "^1.4.2",
     "dotenv": "^16.4.5",
     "lucide-react": "^0.338.0",
     "react": "^18.2.0",
