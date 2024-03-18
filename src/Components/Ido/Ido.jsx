@@ -44,7 +44,12 @@ const Ido = () => {
   };
 
   const isValid =
-    !isNaN(sol) && sol > 0 && !isNaN(bhoomi) && bhoomi > 0 && conversion;
+    !isNaN(sol) &&
+    sol > 0 &&
+    !isNaN(bhoomi) &&
+    bhoomi > 0 &&
+    conversion &&
+    wallet.isWalletConnected;
 
   return (
     <>
@@ -65,6 +70,10 @@ const Ido = () => {
 
             <label htmlFor="">Total Bhoomi tokens to be received:</label>
             <input type="text" value={bhoomi} onChange={() => {}} />
+
+            {!wallet.isWalletConnected && (
+              <div>*Please connect your wallet.</div>
+            )}
 
             {isValid && (
               <button

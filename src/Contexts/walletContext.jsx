@@ -66,8 +66,9 @@ export function WalletProvider(props) {
         );
         console.log(predecimal);
         console.log(postdecimal);
-        if (predecimal === ".") predecimal = "0.";
-        if (predecimal === "") predecimal = "0.";
+        if (predecimal === ".") predecimal = "0";
+        if (predecimal === "") predecimal = "0";
+        if (predecimal === "0.") predecimal = "0";
         setBhoomibalance(`${predecimal}.${postdecimal}`);
       })
       .catch((err) => console.log(err));
