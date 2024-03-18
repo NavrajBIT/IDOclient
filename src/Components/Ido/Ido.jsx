@@ -16,7 +16,7 @@ const Ido = () => {
     }
   }, [sol]);
 
-  const isValid = !isNaN(sol) && sol > 0;
+  const isValid = !isNaN(sol) && sol > 0 && !isNaN(bhoomi) && bhoomi > 0;
 
   return (
     <>
@@ -52,7 +52,7 @@ const Ido = () => {
                     alert("Transaction Unsuccessfull!");
                     return;
                   }
-                  let amount = Number(num.toFixed(2));
+                  let amount = Number(parseFloat(bhoomi).toFixed(2));
                   await api
                     .crud("POST", "mintbhoomitoken", {
                       address: wallet.provider.publicKey.toString(),

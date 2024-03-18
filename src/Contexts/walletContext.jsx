@@ -98,8 +98,6 @@ export function WalletProvider(props) {
   };
 
   const connect = async () => {
-    console.log(window.phantom);
-    return;
     if ("phantom" in window) {
       try {
         let myprovider = window.phantom?.solana;
