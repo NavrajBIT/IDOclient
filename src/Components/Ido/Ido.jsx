@@ -128,7 +128,7 @@ const Ido = () => {
                 )
               </h4>
               <h6>
-                ({wallet?.supplydata?.availableTokens}$ Of{" "}
+                ({wallet?.supplydata?.mintedTokens}$ Of{" "}
                 {wallet?.supplydata?.totalAvailableToMint})
               </h6>
               <div className="progressBar">

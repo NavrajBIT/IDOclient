@@ -80,10 +80,11 @@ export function WalletProvider(props) {
       .then((res) => {
         let avl = res.currentAvailableToMint;
         let availableTokens = avl.substring(0, avl.length - 9);
-        let percentage = parseInt(parseFloat(availableTokens) / 10000000);
+        let mintedTokens = 10000000 - parseFloat(availableTokens);
+        let percentage = parseInt(mintedTokens / 100000);
         setSupplyData({
           percentage: percentage,
-          availableTokens: availableTokens,
+          mintedTokens: mintedTokens,
           ...res,
         });
       })
