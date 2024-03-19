@@ -13,13 +13,13 @@
   position: relative;
   z-index: 1;
 }
-.formColor{
+.formColor {
   background: rgb(35, 72, 59, 0.6);
   padding: 2rem 2rem 0 2rem;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  border-bottom: 4px solid #fff;
+  /* border-bottom: 4px solid #fff; */
 }
 
 .containerHead {
@@ -96,7 +96,7 @@
   cursor: pointer;
 }
 
-.progressContent{
+.progressContent {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -106,16 +106,16 @@
   margin-top: 1rem;
 }
 
-.progressContent h4{
-font-size: 16px;
-font-weight: 600;
+.progressContent h4 {
+  font-size: 16px;
+  font-weight: 600;
 }
-.progressContent h6{
+.progressContent h6 {
   font-size: 10px;
   font-weight: 500;
   margin-bottom: 2rem;
 }
-.progressBar{
+.progressBar {
   background-color: #fff;
   width: 100%;
   height: 25px;
@@ -143,7 +143,6 @@ font-weight: 600;
     #7089d4 83.33%,
     #8d82ea 100%
   );
-
 }
 
 .progressSphere {
@@ -257,7 +256,7 @@ font-weight: 600;
   .formContainer {
     width: 95%;
   }
-  .formColor{
+  .formColor {
     padding: 2rem 1.5rem;
   }
 
