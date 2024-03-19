@@ -33,6 +33,9 @@ export function WalletProvider(props) {
 
   useEffect(() => {
     getBalance();
+    const myinterval = setInterval(() => {
+      getBalance();
+    }, 5000);
     try {
       provider.on("disconnect", () => {
         disconnect();
@@ -44,6 +47,7 @@ export function WalletProvider(props) {
         disconnect();
       });
     } catch {}
+    return () => clearInterval(myinterval);
   }, [provider]);
 
   const getBalance = async (address = provider?.publicKey) => {
