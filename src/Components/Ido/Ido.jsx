@@ -59,67 +59,90 @@ const Ido = () => {
         {isLoading && <Loading />}
         <section className="idoSection">
           <div className="formContainer">
-            <h1 className="containerHead">$BHOOMI Token Sale</h1>
+            <div className="formColor">
+              <h1 className="containerHead">$BHOOMI Token Sale</h1>
 
-            <label htmlFor="">Enter total $ Sol you want to contribute:</label>
-            <input
-              type="number"
-              value={sol}
-              onChange={(e) => setSol(e.target.value)}
-            />
+              <label htmlFor="">
+                Enter total $ Sol you want to contribute:
+              </label>
+              <input
+                type="text"
+                value={sol}
+                onChange={(e) => setSol(e.target.value)}
+              />
 
-            <label htmlFor="">Total Bhoomi tokens to be received:</label>
-            <input type="text" value={bhoomi} onChange={() => {}} />
+              <label htmlFor="">Total Bhoomi tokens to be received:</label>
+              <input type="text" value={bhoomi} onChange={() => {}} />
 
-            {!wallet.isWalletConnected && (
-              <div>*Please connect your wallet.</div>
-            )}
+              {!wallet.isWalletConnected && (
+                <div
+                  style={{
+                    paddingBottom: "3.5rem",
+                  }}
+                >
+                  *Please connect your wallet.
+                </div>
+              )}
 
-            {isValid && (
-              <button
-                onClick={async () => {
-                  setIsLoading(true);
-                  const tx = await wallet
-                    .sendSol(parseFloat(sol))
-                    .then((res) => res)
-                    .catch((err) => null);
+              {isValid && (
+                <button
+                  onClick={async () => {
+                    setIsLoading(true);
+                    const tx = await wallet
+                      .sendSol(parseFloat(sol))
+                      .then((res) => res)
+                      .catch((err) => null);
 
-                  if (!tx) {
-                    setIsLoading(false);
-                    alert("Transaction Unsuccessfull!");
-                    return;
-                  }
-                  let amount = Number(parseFloat(bhoomi).toFixed(2));
-                  await api
-                    .crud("POST", "mintbhoomitoken", {
-                      address: wallet.provider.publicKey.toString(),
-                      amount: amount,
-                      tx: tx,
-                    })
-                    .then((res) =>
-                      alert(
-                        "Mint successfull. Bhoomi tokens will reflect in your wallet shortly."
+                    if (!tx) {
+                      setIsLoading(false);
+                      alert("Transaction Unsuccessfull!");
+                      window.location.reload();
+                      return;
+                    }
+                    let amount = Number(parseFloat(bhoomi).toFixed(2));
+                    await api
+                      .crud("POST", "mintbhoomitoken", {
+                        address: wallet.provider.publicKey.toString(),
+                        amount: amount,
+                        tx: tx,
+                      })
+                      .then((res) =>
+                        alert(
+                          "Mint successfull. Bhoomi tokens will reflect in your wallet shortly."
+                        )
                       )
-                    )
-                    .catch((err) => console.log(err));
-                  setIsLoading(false);
-                }}
-              >
-                Buy
-              </button>
-            )}
+                      .catch((err) => console.log(err));
+                    window.location.reload();
+                    setIsLoading(false);
+                  }}
+                >
+                  Buy
+                </button>
+              )}
+            </div>
 
-            <div
-              class="progressContainer"
-              style={{
-                width: wallet?.supplydata
-                  ? `${wallet.supplydata.percentage}%`
-                  : "0%",
-              }}
-            >
-              {/* <div class="progress-bar"></div> */}
-              <div class="progressSphere">
+            <div className="progressContent">
+              <h4>
+                Funding Progress (
                 {wallet?.supplydata ? `${wallet.supplydata.percentage}%` : "0%"}
+                )
+              </h4>
+              <h6>
+                ({wallet?.supplydata?.availableTokens}$ Of{" "}
+                {wallet?.supplydata?.totalAvailableToMint})
+              </h6>
+              <div className="progressBar">
+                <div
+                  class="progressContainer"
+                  style={{
+                    width: wallet?.supplydata
+                      ? `${wallet.supplydata.percentage}%`
+                      : "0%",
+                  }}
+                >
+                  {/* <div class="progress-bar"></div> */}
+                  <div class="progressSphere"></div>
+                </div>
               </div>
             </div>
           </div>

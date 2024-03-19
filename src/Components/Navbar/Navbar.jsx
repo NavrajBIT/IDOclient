@@ -99,6 +99,13 @@ const Navbar = () => {
             </span>
           </div>
         )}
+        {isDropdownOpen && wallet.isWalletConnected && (
+          <div className="dropdown">
+            <span>
+              <button onClick={wallet.disconnect}>Disconnect</button>
+            </span>
+          </div>
+        )}
       </div>
       {/* </div> */}
 

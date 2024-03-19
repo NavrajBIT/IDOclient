@@ -23,25 +23,28 @@ export function WalletProvider(props) {
   let connection = new web3.Connection(web3.clusterApiUrl("devnet"));
 
   useEffect(() => {
-    getProvider();
+    try {
+      let wallet = localStorage.getItem("wallet");
+      console.log(wallet);
+      if (wallet === "phantom") connect();
+      if (wallet === "solflare") connectSolflare();
+    } catch {}
   }, []);
 
   useEffect(() => {
     getBalance();
+    try {
+      provider.on("disconnect", () => {
+        disconnect();
+      });
+      provider.on("accountChanged", () => {
+        disconnect();
+      });
+      provider.on("networkChanged", () => {
+        disconnect();
+      });
+    } catch {}
   }, [provider]);
-
-  const getProvider = () => {
-    if ("phantom" in window) {
-      const myprovider = window.phantom?.solana;
-      if (myprovider?.isPhantom) {
-        setProvider(myprovider);
-
-        if (myprovider.isConnected) {
-          setIsWalletConnected(true);
-        }
-      }
-    }
-  };
 
   const getBalance = async (address = provider?.publicKey) => {
     if (!provider) return;
@@ -78,7 +81,11 @@ export function WalletProvider(props) {
         let avl = res.currentAvailableToMint;
         let availableTokens = avl.substring(0, avl.length - 9);
         let percentage = parseInt(parseFloat(availableTokens) / 10000000);
-        setSupplyData({ percentage: percentage, ...res });
+        setSupplyData({
+          percentage: percentage,
+          availableTokens: availableTokens,
+          ...res,
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -88,10 +95,10 @@ export function WalletProvider(props) {
       try {
         const solflareWallet = new SolflareWallet();
         solflareWallet.on("connect", () => {
-          console.log("yes---");
           setPublicKey(solflareWallet.publicKey.toString());
           setProvider(solflareWallet);
           setIsWalletConnected(true);
+          localStorage.setItem("wallet", "solflare");
         });
         await solflareWallet.connect();
       } catch {
@@ -106,11 +113,14 @@ export function WalletProvider(props) {
   const connect = async () => {
     if ("phantom" in window) {
       try {
+        console.log("trying to connect");
         let myprovider = window.phantom?.solana;
         const resp = await myprovider.connect();
+        console.log("request processed...");
         setPublicKey(resp.publicKey);
-        getProvider();
-        getBalance(resp.publicKey);
+        localStorage.setItem("wallet", "phantom");
+        setProvider(myprovider);
+        setIsWalletConnected(true);
       } catch {
         setIsWalletConnected(false);
         alert("Wallet connection declined!");
@@ -122,7 +132,7 @@ export function WalletProvider(props) {
 
   const sendSol = async (sol) => {
     if (!provider) {
-      getProvider();
+      alert("Please connect wallet.");
       return;
     }
     const recipientAddress = "9G4RTia1n5uThQ42tfmci2k9w1nauXjAKQPGQV9FKRuD";
@@ -157,6 +167,17 @@ export function WalletProvider(props) {
     }
   };
 
+  const disconnect = async () => {
+    try {
+      provider.request({ method: "disconnect" });
+    } catch {}
+    setIsWalletConnected(false);
+    setProvider(null);
+    setPublicKey(null);
+    setSolBalance(0);
+    setBhoomibalance(0);
+  };
+
   const value = {
     publicKey,
     provider,
@@ -168,6 +189,7 @@ export function WalletProvider(props) {
     getBalance,
     bhoomibalance,
     supplydata,
+    disconnect,
   };
 
   return (

@@ -2,18 +2,24 @@
   min-height: calc(100vh + 72px);
   padding: 7rem 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-evenly;
 }
 
 .formContainer {
-  background: rgb(35, 72, 59, 0.6);
   width: 35%;
-  padding: 3rem 2rem;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1;
+}
+.formColor{
+  background: rgb(35, 72, 59, 0.6);
+  padding: 2rem 2rem 0 2rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border-bottom: 4px solid #fff;
 }
 
 .containerHead {
@@ -34,7 +40,7 @@
 
 .formContainer h1 {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   font-size: 2.2rem;
   font-weight: 800;
 }
@@ -61,7 +67,7 @@
     #8d82ea 100%
   );
   border-image-slice: 1;
-  border-radius: 8px;
+  border-radius: 10px;
   outline: none;
 }
 
@@ -90,12 +96,43 @@
   cursor: pointer;
 }
 
+.progressContent{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background-color: transparent;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.progressContent h4{
+font-size: 16px;
+font-weight: 600;
+}
+.progressContent h6{
+  font-size: 10px;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+.progressBar{
+  background-color: #fff;
+  width: 100%;
+  height: 25px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  border-radius: 20px;
+}
 .progressContainer {
   position: absolute;
+  z-index: 2;
   bottom: 0;
   width: 30%;
   left: 0;
-  height: 5px;
+  height: 100%;
+  border-radius: 20px;
   background: linear-gradient(
     270deg,
     #9f7ef6 0%,
@@ -106,16 +143,17 @@
     #7089d4 83.33%,
     #8d82ea 100%
   );
+
 }
 
 .progressSphere {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  /* width: 40px; */
+  /* height: 40px; */
   border-radius: 50%;
-  background-color: #8d82ea;
+  /* background-color: #8d82ea; */
   right: 0;
   margin-right: -20px;
   display: flex;
@@ -193,6 +231,7 @@
 @media only screen and (max-width: 992px) {
   .idoSection {
     flex-direction: column;
+    align-items: center;
     padding: 7rem 0;
     gap: 2rem;
   }
@@ -217,6 +256,8 @@
 @media only screen and (max-width: 450px) {
   .formContainer {
     width: 95%;
+  }
+  .formColor{
     padding: 2rem 1.5rem;
   }
 
