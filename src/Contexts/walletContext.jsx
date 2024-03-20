@@ -20,7 +20,7 @@ export function WalletProvider(props) {
   const [bhoomibalance, setBhoomibalance] = useState(0);
   const [supplydata, setSupplyData] = useState(null);
 
-  let connection = new web3.Connection(web3.clusterApiUrl("devnet"));
+  let connection = new web3.Connection(web3.clusterApiUrl("testnet"));
 
   useEffect(() => {
     try {
