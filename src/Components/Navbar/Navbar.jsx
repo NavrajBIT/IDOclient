@@ -132,18 +132,31 @@ const Navbar = () => {
           style={{ marginTop: "1rem" }}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
-          Connect Wallet
+          {wallet.isWalletConnected
+            ? `${wallet?.provider?.publicKey
+                .toString()
+                .slice(0, 4)}...${wallet?.provider?.publicKey
+                .toString()
+                .slice(39)}`
+            : "Connect Wallet"}
         </button>
-        {isDropdownOpen && (
+        {isDropdownOpen && !wallet.isWalletConnected && (
           <div className="dropdown mobileDropdown">
             <span>
               <img src="/phantom.png" alt="phantom_logo" />
-              <button>Phantom</button>
+              <button onClick={wallet.connect}>Phantom</button>
             </span>
             <hr />
             <span>
               <img src="/solfare.png" alt="solfare_logo" />
-              <button>Solfare</button>
+              <button onClick={wallet.connectSolflare}>Solfare</button>
+            </span>
+          </div>
+        )}
+        {isDropdownOpen && wallet.isWalletConnected && (
+          <div className="dropdown mobileDropdown">
+            <span>
+              <button onClick={wallet.disconnect}>Disconnect</button>
             </span>
           </div>
         )}

@@ -1,167 +1,176 @@
 .navbar {
-    width: 100%;
-    height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 3rem;
-    position: fixed;
-    z-index: 2;
-    transition: background-color 0.3s ease;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem;
+  position: fixed;
+  z-index: 2;
+  transition: background-color 0.3s ease;
 }
 
 .logoImg {
-    cursor: pointer;
-    height: 7rem;
+  cursor: pointer;
+  height: 7rem;
 }
 
 .linksContainer {
-    width: 50%;
-    display: flex;
-    /* justify-content: flex-end; */
-    justify-content: center;
-    gap: 4rem;
-    padding: 4px;
+  width: 50%;
+  display: flex;
+  /* justify-content: flex-end; */
+  justify-content: center;
+  gap: 4rem;
+  padding: 4px;
 }
 
 .hamburgerImg {
-    display: none;
-    height: 1.8rem;
-    width: 2rem;
-    filter: invert(100%);
+  display: none;
+  height: 1.8rem;
+  width: 2rem;
+  filter: invert(100%);
 }
 
 .navLinks {
-    background: none;
-    outline: none;
-    border: none;
-    font-size: 1rem;
-    font-weight: 800;
-    color: var(--light-10);
-    cursor: pointer;
-    font-family: "Inter";
+  background: none;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--light-10);
+  cursor: pointer;
+  font-family: "Inter";
 }
 
 .btnContainer {
-    position: relative;
+  position: relative;
 }
 
 .walletBtn {
-    color: var(--light-10);
-    background: transparent;
-    border: 2px solid var(--light-10);
-    padding: 0.5rem 1.2rem;
-    width: fit-content;
-    font-size: 1rem;
-    font-weight: 900;
-    border-radius: 2rem;
-    cursor: pointer;
+  color: var(--light-10);
+  background: transparent;
+  border: 2px solid var(--light-10);
+  padding: 0.5rem 1.2rem;
+  width: fit-content;
+  font-size: 1rem;
+  font-weight: 900;
+  border-radius: 2rem;
+  cursor: pointer;
 }
 
 .walletBtn:hover {
-    background: linear-gradient(90deg, #A27DF8 5.09%, #9480EE 8.98%, #5F8CC8 24.07%, #3FB0A7 43.06%, #24CF8A 62.04%, #8A62F3 81.02%, #49A3B2 100%);
-    border: 1px solid #7775E0;
+  background: linear-gradient(
+    90deg,
+    #a27df8 5.09%,
+    #9480ee 8.98%,
+    #5f8cc8 24.07%,
+    #3fb0a7 43.06%,
+    #24cf8a 62.04%,
+    #8a62f3 81.02%,
+    #49a3b2 100%
+  );
+  border: 1px solid #7775e0;
 }
 
 .dropdown {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    top: 3.5rem;
-    right: 8px;
-    background-color: #82908D;
-    border-radius: 10px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 3.5rem;
+  right: 8px;
+  background-color: #82908d;
+  border-radius: 10px;
 }
 
 .mobileDropdown {
-    top: 16.5rem;
-    right: 3rem;
+  top: 19rem;
+  right: 3rem;
 }
 
 .dropdown span {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .dropdown hr {
-    border: 1px solid #5A5D5C;
+  border: 1px solid #5a5d5c;
 }
 
 .dropdown img {
-    cursor: pointer;
-    height: 2rem;
+  cursor: pointer;
+  height: 2rem;
 }
 
 .dropdown button {
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    color: var(--light-10);
-    cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: var(--light-10);
+  cursor: pointer;
 }
 
 .mobileNav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    padding-top: 6rem;
-    transition: 0.5s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 6rem;
+  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
 .closeIcon {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    height: 2rem;
-    width: 2rem;
-    filter: invert(100%);
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  height: 2rem;
+  width: 2rem;
+  filter: invert(100%);
 }
 
 /* MEDIA QUERY */
 
-@media only screen and (max-width:1200px) {
-    .navbar {
-        padding: 3rem 1rem;
-    }
+@media only screen and (max-width: 1200px) {
+  .navbar {
+    padding: 3rem 1rem;
+  }
 
-    .linksContainer {
-        gap: 3rem;
-        width: 45%;
-    }
+  .linksContainer {
+    gap: 3rem;
+    width: 45%;
+  }
 }
 
-@media only screen and (max-width:900px) {
-    .linksContainer {
-        justify-content: flex-end;
-    }
+@media only screen and (max-width: 900px) {
+  .linksContainer {
+    justify-content: flex-end;
+  }
 
-    .linksContainer,
-    .btnContainer .walletBtn {
-        display: none;
-    }
+  .linksContainer,
+  .btnContainer .walletBtn {
+    display: none;
+  }
 
-    .hamburgerImg {
-        display: block;
-        height: 1.8rem;
-        width: 2rem;
-        filter: invert(100%);
-    }
+  .hamburgerImg {
+    display: block;
+    height: 1.8rem;
+    width: 2rem;
+    filter: invert(100%);
+  }
 }
 
-@media only screen and (max-width:600px) {
-    .navbar {
-        padding: 1rem;
-    }
+@media only screen and (max-width: 600px) {
+  .navbar {
+    padding: 1rem;
+  }
 }
