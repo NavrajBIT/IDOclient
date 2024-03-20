@@ -161,7 +161,7 @@ const Ido = () => {
               <span className="address">
                 <span>Contract Address:</span>
                 <h6 className="value">
-                  5UmjnxfKkG55E2m6BPAZFaM6hUy6jtEJC9zGgxdqjxKL
+                  GCB6UqJUmf1poDdoLA4CKxuQ5vnmenrUtrikyrSfccco
                 </h6>
               </span>
               <span>

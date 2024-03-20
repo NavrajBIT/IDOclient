@@ -1,4 +1,4 @@
-const API_URL = "http://13.126.252.255/api/";
+const API_URL = "https://bitbhoomiido.tech/api/";
 
 const useAPI = () => {
   async function crud(requestMethod, endpoint, data) {
