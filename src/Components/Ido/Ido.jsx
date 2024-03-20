@@ -96,7 +96,7 @@ const Ido = () => {
                     if (!tx) {
                       setIsLoading(false);
                       alert("Transaction Unsuccessfull!");
-                      window.location.reload();
+
                       return;
                     }
                     let amount = Number(parseFloat(bhoomi).toFixed(2));
