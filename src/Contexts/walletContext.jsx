@@ -38,7 +38,7 @@ export function WalletProvider(props) {
     const myinterval = setInterval(() => {
       getBalance();
       getSupply();
-    }, 5000);
+    }, 3000);
     try {
       provider.on("disconnect", () => {
         disconnect();

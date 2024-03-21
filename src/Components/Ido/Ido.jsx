@@ -5,6 +5,7 @@ import { useWallet } from "../../Contexts/walletContext";
 import Loading from "./loading";
 import useAPI from "../useAPI";
 import { useNavigate } from "react-router-dom";
+import SaleClosed from "./saleClosed";
 
 const Ido = () => {
   const api = useAPI();
@@ -54,10 +55,13 @@ const Ido = () => {
     wallet.isWalletConnected &&
     bhoomi <= wallet?.supplydata?.remaintingTokens &&
     wallet?.supplydata?.remaintingTokens >= 1;
+
+  const isSaleClosed = wallet?.supplydata?.remaintingTokens <= 1;
+
   return (
     <>
       <Navbar />
-
+      {isSaleClosed && <SaleClosed />}
       <div className="bgStyle">
         {isLoading && <Loading />}
         <section className="idoSection">
