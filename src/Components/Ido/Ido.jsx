@@ -19,7 +19,9 @@ const Ido = () => {
     else {
       if (!conversion) setBhoomi(0);
       else {
-        setBhoomi(parseFloat(sol) * parseFloat(conversion) * 10);
+        let convertedAmount = parseFloat(sol) * parseFloat(conversion) * 10;
+        let amount = Number(parseFloat(convertedAmount).toFixed(9));
+        setBhoomi(amount);
       }
     }
   }, [sol, conversion]);
@@ -110,12 +112,13 @@ const Ido = () => {
 
                       return;
                     }
-                    let amount = Number(parseFloat(bhoomi).toFixed(2));
+
                     await api
                       .crud("POST", "mintbhoomitoken", {
                         address: wallet.provider.publicKey.toString(),
-                        amount: amount,
+                        amount: bhoomi,
                         tx: tx,
+                        sol: sol,
                       })
                       .then((res) =>
                         alert(
