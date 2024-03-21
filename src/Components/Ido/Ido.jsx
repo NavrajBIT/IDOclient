@@ -28,7 +28,7 @@ const Ido = () => {
   }, [sol, conversion]);
 
   useEffect(() => {
-    // getExchangeRate();
+    getExchangeRate();
   }, []);
 
   const getExchangeRate = async () => {

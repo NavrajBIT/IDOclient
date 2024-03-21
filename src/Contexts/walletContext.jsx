@@ -87,6 +87,7 @@ export function WalletProvider(props) {
         if (isNaN(percentage)) percentage = 100;
         if (isNaN(mintedTokens)) mintedTokens = 0;
         if (isNaN(remaintingTokens)) remaintingTokens = 0;
+        if (remaintingTokens < 1) percentage = 100;
         setSupplyData({
           ...res,
           percentage: percentage,
