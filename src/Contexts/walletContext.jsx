@@ -76,6 +76,9 @@ export function WalletProvider(props) {
         if (predecimal === ".") predecimal = "0";
         if (predecimal === "") predecimal = "0";
         if (predecimal === "0.") predecimal = "0";
+        if (postdecimal === ".") predecimal = "0";
+        if (postdecimal === "") predecimal = "0";
+        if (postdecimal === "0.") predecimal = "0";
         setBhoomibalance(`${predecimal}.${postdecimal}`);
       })
       .catch((err) => console.log(err));
@@ -84,8 +87,8 @@ export function WalletProvider(props) {
       .then((res) => {
         let avl = res.currentAvailableToMint;
         let availableTokens = avl.substring(0, avl.length - 9);
-        let mintedTokens = 100000 - parseFloat(availableTokens);
-        let percentage = parseInt(mintedTokens / 1000);
+        let mintedTokens = 5000 - parseFloat(availableTokens);
+        let percentage = parseInt(mintedTokens / 50);
         setSupplyData({
           percentage: percentage,
           mintedTokens: mintedTokens,
