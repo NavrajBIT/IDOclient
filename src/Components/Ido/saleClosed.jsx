@@ -6,7 +6,7 @@ const SaleClosed = () => {
     <div
       style={{
         position: "fixed",
-        background: "rgba(0,0,0,1)",
+        background: "var(--green-40)",
         top: 0,
         left: 0,
         height: "100vh",
