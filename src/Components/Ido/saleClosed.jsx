@@ -11,7 +11,7 @@ const SaleClosed = () => {
         left: 0,
         height: "100vh",
         width: "100vw",
-        zIndex: "100",
+        zIndex: "200",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

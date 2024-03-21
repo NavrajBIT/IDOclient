@@ -28,7 +28,7 @@ const Ido = () => {
   }, [sol, conversion]);
 
   useEffect(() => {
-    getExchangeRate();
+    // getExchangeRate();
   }, []);
 
   const getExchangeRate = async () => {
@@ -61,6 +61,7 @@ const Ido = () => {
   return (
     <>
       <Navbar />
+
       {isSaleClosed && <SaleClosed />}
       <div className="bgStyle">
         {isLoading && <Loading />}
