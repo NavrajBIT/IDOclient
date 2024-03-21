@@ -49,8 +49,9 @@ const Ido = () => {
     !isNaN(bhoomi) &&
     bhoomi > 0 &&
     conversion &&
-    wallet.isWalletConnected;
-
+    wallet.isWalletConnected &&
+    bhoomi <= wallet?.supplydata?.remaintingTokens &&
+    wallet?.supplydata?.remaintingTokens > 0;
   return (
     <>
       <Navbar />
@@ -81,6 +82,16 @@ const Ido = () => {
                   }}
                 >
                   *Please connect your wallet.
+                </div>
+              )}
+              {wallet?.supplydata?.remaintingTokens <= 0 && (
+                <div
+                  style={{
+                    paddingBottom: "1.5rem",
+                    fontSize: "2rem",
+                  }}
+                >
+                  Token sale is closed.
                 </div>
               )}
 
@@ -119,12 +130,21 @@ const Ido = () => {
                   Buy
                 </button>
               )}
+
+              <div style={{ marginBottom: "1rem" }}>
+                Available Tokens = {wallet?.supplydata?.remaintingTokens}
+              </div>
             </div>
 
             <div className="progressContent">
               <h4>
                 Sale Progress (
-                {wallet?.supplydata ? `${wallet.supplydata.percentage}%` : "0%"}
+                {wallet?.supplydata
+                  ? `${Math.min(
+                      parseFloat(wallet.supplydata.percentage),
+                      100
+                    )}%`
+                  : "0%"}
                 )
               </h4>
               <h6>
@@ -133,15 +153,18 @@ const Ido = () => {
               </h6>
               <div className="progressBar">
                 <div
-                  class="progressContainer"
+                  className="progressContainer"
                   style={{
                     width: wallet?.supplydata
-                      ? `${wallet.supplydata.percentage}%`
+                      ? `${Math.min(
+                          parseFloat(wallet.supplydata.percentage),
+                          100
+                        )}%`
                       : "0%",
                   }}
                 >
                   {/* <div class="progress-bar"></div> */}
-                  <div class="progressSphere"></div>
+                  <div className="progressSphere"></div>
                 </div>
               </div>
             </div>
@@ -160,9 +183,7 @@ const Ido = () => {
               </span>
               <span className="address">
                 <span>Contract Address:</span>
-                <h6 className="value">
-                  3obAbseEXr6haP46og3DJhmMpXPFUxHfcxjkva2VkDdj
-                </h6>
+                <h6 className="value">{wallet?.contractAddress}</h6>
               </span>
               <span>
                 <span>Decimal:</span>

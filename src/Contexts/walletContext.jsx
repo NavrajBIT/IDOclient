@@ -19,6 +19,7 @@ export function WalletProvider(props) {
   const [solbalance, setSolBalance] = useState(0);
   const [bhoomibalance, setBhoomibalance] = useState(0);
   const [supplydata, setSupplyData] = useState(null);
+  const [contractAddress, setContractAddress] = useState(null);
 
   let connection = new web3.Connection(web3.clusterApiUrl("testnet"));
 
@@ -33,8 +34,10 @@ export function WalletProvider(props) {
 
   useEffect(() => {
     getBalance();
+    getSupply();
     const myinterval = setInterval(() => {
       getBalance();
+      getSupply();
     }, 5000);
     try {
       provider.on("disconnect", () => {
@@ -58,41 +61,37 @@ export function WalletProvider(props) {
         address: provider?.publicKey?.toString(),
       })
       .then((res) => {
-        let totalBalance = res.balance;
-        let balancewithoutdecimal = totalBalance.substring(
-          0,
-          totalBalance.length - 7
-        );
-        let predecimal = balancewithoutdecimal.substring(
-          0,
-          balancewithoutdecimal.length - 2
-        );
-        let postdecimal = balancewithoutdecimal.substring(
-          balancewithoutdecimal.length - 2,
-          balancewithoutdecimal.length
-        );
-        console.log(predecimal);
-        console.log(postdecimal);
-        if (predecimal === ".") predecimal = "0";
-        if (predecimal === "") predecimal = "0";
-        if (predecimal === "0.") predecimal = "0";
-        if (postdecimal === ".") predecimal = "0";
-        if (postdecimal === "") predecimal = "0";
-        if (postdecimal === "0.") predecimal = "0";
-        setBhoomibalance(`${predecimal}.${postdecimal}`);
+        let tokenBalance = parseFloat(res.balance);
+        tokenBalance = tokenBalance / Math.pow(10, 9);
+        tokenBalance = Math.round(tokenBalance * 100) / 100;
+        setBhoomibalance(tokenBalance);
       })
       .catch((err) => console.log(err));
+  };
+
+  const getSupply = async () => {
     await api
       .crud("GET", "getbhoomisupply")
       .then((res) => {
-        let avl = res.currentAvailableToMint;
-        let availableTokens = avl.substring(0, avl.length - 9);
-        let mintedTokens = 5000 - parseFloat(availableTokens);
-        let percentage = parseInt(mintedTokens / 50);
+        setContractAddress(res.address);
+        let avlTokens = parseFloat(res.currentAvailableToMint);
+        avlTokens = avlTokens / Math.pow(10, 9);
+        let totalAvlTokens = parseFloat(res.totalAvailableToMint);
+        let percentage = parseInt(
+          ((totalAvlTokens - avlTokens) / totalAvlTokens) * 100
+        );
+        let mintedTokens = parseInt(totalAvlTokens - avlTokens);
+        let remaintingTokens = parseFloat(res.currentAvailableToMint);
+        remaintingTokens = remaintingTokens / Math.pow(10, 9);
+
+        if (isNaN(percentage)) percentage = 100;
+        if (isNaN(mintedTokens)) mintedTokens = 0;
+        if (isNaN(remaintingTokens)) remaintingTokens = 0;
         setSupplyData({
+          ...res,
           percentage: percentage,
           mintedTokens: mintedTokens,
-          ...res,
+          remaintingTokens: remaintingTokens,
         });
       })
       .catch((err) => console.log(err));
@@ -198,6 +197,7 @@ export function WalletProvider(props) {
     bhoomibalance,
     supplydata,
     disconnect,
+    contractAddress,
   };
 
   return (
