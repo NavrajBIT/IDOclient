@@ -51,7 +51,7 @@ const Ido = () => {
     conversion &&
     wallet.isWalletConnected &&
     bhoomi <= wallet?.supplydata?.remaintingTokens &&
-    wallet?.supplydata?.remaintingTokens > 0;
+    wallet?.supplydata?.remaintingTokens >= 1;
   return (
     <>
       <Navbar />
@@ -84,7 +84,7 @@ const Ido = () => {
                   *Please connect your wallet.
                 </div>
               )}
-              {wallet?.supplydata?.remaintingTokens <= 0 && (
+              {wallet?.supplydata?.remaintingTokens <= 1 && (
                 <div
                   style={{
                     paddingBottom: "1.5rem",
