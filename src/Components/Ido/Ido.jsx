@@ -120,12 +120,20 @@ const Ido = () => {
                         tx: tx,
                         sol: sol,
                       })
-                      .then((res) =>
+                      .then((res) => {
+                        if (res.status === "failed") {
+                          alert("Mint failed. Amount will be reverted.");
+                        } else {
+                          alert(
+                            "Mint successfull. Bhoomi tokens will reflect in your wallet shortly."
+                          );
+                        }
+                      })
+                      .catch((err) => {
                         alert(
-                          "Mint successfull. Bhoomi tokens will reflect in your wallet shortly."
-                        )
-                      )
-                      .catch((err) => console.log(err));
+                          "Something went wrong. Please try again. If your amount was deducted, please contact support@beimagine.tech"
+                        );
+                      });
                     window.location.reload();
                     setIsLoading(false);
                   }}
