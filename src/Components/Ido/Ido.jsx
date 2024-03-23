@@ -34,8 +34,6 @@ const Ido = () => {
   }, []);
 
   const getExchangeRate = async () => {
-    setConversion(240);
-    return;
     setIsLoading(true);
     await fetch(
       "https://min-api.cryptocompare.com/data/pricemulti?fsyms=SOL&tsyms=SOL,USD&api_key=a0d74da5182505e471796936416d849166115c9f413ddad7f7e2caff213b0ae5"

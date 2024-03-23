@@ -21,8 +21,8 @@ export function WalletProvider(props) {
   const [supplydata, setSupplyData] = useState(null);
   const [contractAddress, setContractAddress] = useState(null);
 
-  // let connection = new web3.Connection("https://api.mainnet-beta.solana.com/");
-  let connection = new web3.Connection("https://api.devnet.solana.com/");
+  let connection = new web3.Connection("https://api.mainnet-beta.solana.com/");
+  // let connection = new web3.Connection("https://api.devnet.solana.com/");
 
   useEffect(() => {
     try {
