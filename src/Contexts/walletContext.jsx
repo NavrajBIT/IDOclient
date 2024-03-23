@@ -21,7 +21,8 @@ export function WalletProvider(props) {
   const [supplydata, setSupplyData] = useState(null);
   const [contractAddress, setContractAddress] = useState(null);
 
-  let connection = new web3.Connection("https://api.mainnet-beta.solana.com/");
+  // let connection = new web3.Connection("https://api.mainnet-beta.solana.com/");
+  let connection = new web3.Connection("https://api.devnet.solana.com/");
 
   useEffect(() => {
     try {
@@ -55,11 +56,16 @@ export function WalletProvider(props) {
 
   const getBalance = async (address = provider?.publicKey) => {
     if (!provider) return;
-
+    if (!contractAddress) return;
     await api
-      .crud("POST", "getbhoomibalance", {
-        address: provider?.publicKey?.toString(),
-      })
+      .crud(
+        "POST",
+        "getbhoomibalance",
+        {
+          address: provider?.publicKey?.toString(),
+        },
+        true
+      )
       .then((res) => {
         let tokenBalance = parseFloat(res.balance);
         tokenBalance = tokenBalance / Math.pow(10, 9);
@@ -71,18 +77,18 @@ export function WalletProvider(props) {
 
   const getSupply = async () => {
     await api
-      .crud("GET", "getbhoomisupply")
+      .crud("GET", "getSupply")
       .then((res) => {
         setContractAddress(res.address);
         let avlTokens = parseFloat(res.currentAvailableToMint);
-        avlTokens = avlTokens / Math.pow(10, 9);
+        // avlTokens = avlTokens / Math.pow(10, 9);
         let totalAvlTokens = parseFloat(res.totalAvailableToMint);
         let percentage = parseInt(
           ((totalAvlTokens - avlTokens) / totalAvlTokens) * 100
         );
         let mintedTokens = parseInt(totalAvlTokens - avlTokens);
         let remaintingTokens = parseFloat(res.currentAvailableToMint);
-        remaintingTokens = remaintingTokens / Math.pow(10, 9);
+        // remaintingTokens = remaintingTokens / Math.pow(10, 9);
 
         if (isNaN(percentage)) percentage = 100;
         if (isNaN(mintedTokens)) mintedTokens = 0;

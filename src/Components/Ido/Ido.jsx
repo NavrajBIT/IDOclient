@@ -6,6 +6,7 @@ import Loading from "./loading";
 import useAPI from "../useAPI";
 import { useNavigate } from "react-router-dom";
 import SaleClosed from "./saleClosed";
+import SuccessPopup from "./successPopup";
 
 const Ido = () => {
   const api = useAPI();
@@ -15,6 +16,7 @@ const Ido = () => {
   const [bhoomi, setBhoomi] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [conversion, setConversion] = useState(null);
+  const [success, setSuccess] = useState(false);
   useEffect(() => {
     if (isNaN(parseFloat(sol))) setBhoomi(0);
     else {
@@ -32,6 +34,8 @@ const Ido = () => {
   }, []);
 
   const getExchangeRate = async () => {
+    setConversion(240);
+    return;
     setIsLoading(true);
     await fetch(
       "https://min-api.cryptocompare.com/data/pricemulti?fsyms=SOL&tsyms=SOL,USD&api_key=a0d74da5182505e471796936416d849166115c9f413ddad7f7e2caff213b0ae5"
@@ -61,7 +65,7 @@ const Ido = () => {
   return (
     <>
       <Navbar />
-
+      {success && <SuccessPopup />}
       {isSaleClosed && <SaleClosed />}
       <div className="bgStyle">
         {isLoading && <Loading />}
@@ -69,7 +73,6 @@ const Ido = () => {
           <div className="formContainer">
             <div className="formColor">
               <h1 className="containerHead">$BHOOMI Token Sale</h1>
-
               <label htmlFor="">
                 Enter total $ Sol you want to contribute:
               </label>
@@ -114,32 +117,25 @@ const Ido = () => {
                     if (!tx) {
                       setIsLoading(false);
                       alert("Transaction Unsuccessfull!");
-
                       return;
                     }
 
                     await api
-                      .crud("POST", "mintbhoomitoken", {
+                      .crud("POST", "mint", {
                         address: wallet.provider.publicKey.toString(),
                         amount: bhoomi,
                         tx: tx,
                         sol: sol,
                       })
                       .then((res) => {
-                        if (res.status === "failed") {
-                          alert("Mint failed. Amount will be reverted.");
-                        } else {
-                          alert(
-                            "Mint successfull. Bhoomi tokens will reflect in your wallet shortly."
-                          );
-                        }
+                        setSuccess(true);
                       })
                       .catch((err) => {
                         alert(
                           "Something went wrong. Please try again. If your amount was deducted, please contact support@beimagine.tech"
                         );
                       });
-                    window.location.reload();
+
                     setIsLoading(false);
                   }}
                 >
