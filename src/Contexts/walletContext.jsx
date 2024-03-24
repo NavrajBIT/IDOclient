@@ -21,7 +21,10 @@ export function WalletProvider(props) {
   const [supplydata, setSupplyData] = useState(null);
   const [contractAddress, setContractAddress] = useState(null);
 
-  let connection = new web3.Connection("https://api.mainnet-beta.solana.com/");
+  // let connection = new web3.Connection("https://api.mainnet-beta.solana.com/");
+  let connection = new web3.Connection(
+    "https://solana-mainnet.g.alchemy.com/v2/kMrUikMCKkIijBbmIki8WnfM5kP72Coj"
+  );
   // let connection = new web3.Connection("https://api.devnet.solana.com/");
 
   useEffect(() => {
@@ -67,6 +70,7 @@ export function WalletProvider(props) {
         true
       )
       .then((res) => {
+        console.log(res);
         let tokenBalance = parseFloat(res.balance);
         tokenBalance = tokenBalance / Math.pow(10, 9);
         tokenBalance = Math.round(tokenBalance * 100) / 100;
