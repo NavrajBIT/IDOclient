@@ -42,7 +42,7 @@ export function WalletProvider(props) {
     const myinterval = setInterval(() => {
       getBalance();
       getSupply();
-    }, 3000);
+    }, 5000);
     try {
       provider.on("disconnect", () => {
         disconnect();
@@ -87,9 +87,12 @@ export function WalletProvider(props) {
         let avlTokens = parseFloat(res.currentAvailableToMint);
         // avlTokens = avlTokens / Math.pow(10, 9);
         let totalAvlTokens = parseFloat(res.totalAvailableToMint);
-        let percentage = parseInt(
+        let percentage = parseFloat(
           ((totalAvlTokens - avlTokens) / totalAvlTokens) * 100
         );
+        try {
+          percentage = Math.round(percentage * 100) / 100;
+        } catch {}
         let mintedTokens = parseInt(totalAvlTokens - avlTokens);
         let remaintingTokens = parseFloat(res.currentAvailableToMint);
         // remaintingTokens = remaintingTokens / Math.pow(10, 9);
