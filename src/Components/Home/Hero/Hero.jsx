@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./Hero.css";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   //   const [remainingTime, setRemainingTime] = useState(calculateRemainingTime());
 
   //   useEffect(() => {
@@ -36,14 +38,37 @@ const Hero = () => {
 
         <h1 className="heroTagline">Where Technology Meets Sustainability</h1>
 
-        <div
+        {/* <div
           style={{
             fontSize: "3rem",
           }}
           className="heroMaintext"
         >
           In Progress
-        </div>
+        </div> */}
+
+        <button
+          style={{
+            padding: "20px",
+            fontSize: "2rem",
+            color: "white",
+            background:
+              "linear-gradient(95.33deg, #AD8CF8 11.46%, #9B73F7 16.35%, #8D5FF6 21.24%, #7770E2 26.14%, #7178DB 31.03%, #6288CB 35.92%, #5E8DC7 40.81%, #509CB9 45.7%, #529ABA 50.59%, #43AAAC 55.48%, #37B89F 60.37%, #2AC591 65.27%, #20D386 70.16%, #30C197 75.05%, #32BD99 79.94%, #318B86 84.83%, #49A3B2 89.72%)",
+            borderRadius: "25px",
+            // background: "var(--green-10)",
+          }}
+          onClick={() => navigate("ido")}
+        >
+          <h1
+            // className="heroMaintext"
+            style={{
+              fontSize: "2rem",
+              color: "white",
+            }}
+          >
+            Buy $BHOOMI
+          </h1>
+        </button>
 
         {/* <div className="timerContainer">
           <div className="timerBox">
