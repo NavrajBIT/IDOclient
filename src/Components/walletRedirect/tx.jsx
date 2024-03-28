@@ -36,13 +36,16 @@ const Tx = () => {
       let sharedSecretString = localStorage.getItem("sharedSecret");
       const numbers = sharedSecretString.split(",").map(Number);
       const sharedSecret = new Uint8Array(numbers);
-      console.log(sharedSecret);
       try {
+        const decodeParamData = bs58.decode(queryParams.data);
+        const decodeParamNonce = bs58.decode(queryParams.nonce);
         const decryptedData = nacl.box.open.after(
-          bs58.decode(queryParams.data),
-          bs58.decode(queryParams.nonce),
+          decodeParamData,
+          decodeParamNonce,
           sharedSecret
         );
+
+        console.log(decryptedData);
 
         let decodedData = JSON.parse(
           Buffer.from(decryptedData).toString("utf8")
