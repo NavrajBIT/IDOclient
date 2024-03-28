@@ -42,7 +42,6 @@ const ConnectPhantom = () => {
     const decodedParsedData = JSON.parse(
       Buffer.from(decryptedData).toString("utf8")
     );
-
     wallet.mobile.setPublicKey(decodedParsedData.public_key);
     wallet.mobile.setSharedSecret(sharedSecret);
     localStorage.setItem("sharedSecret", sharedSecret);
@@ -53,6 +52,7 @@ const ConnectPhantom = () => {
     wallet.setIsWalletConnected(true);
     localStorage.setItem("wallet", "phantom");
     localStorage.setItem("wallettype", "mobile");
+    localStorage.setItem("address", decodedParsedData.public_key);
     navigate("/");
   };
 
