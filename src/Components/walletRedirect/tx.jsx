@@ -51,7 +51,6 @@ const Tx = () => {
           Buffer.from(decryptedData).toString("utf8")
         );
         console.log(decodedData);
-        alert(JSON.parse(decodedData));
         const signature = decodedData.signature;
         await api
           .crud("POST", "mint", {

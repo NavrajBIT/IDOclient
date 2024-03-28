@@ -53,7 +53,7 @@ const ConnectPhantom = () => {
     wallet.setIsWalletConnected(true);
     localStorage.setItem("wallet", "phantom");
     localStorage.setItem("wallettype", "mobile");
-    // navigate("/");
+    navigate("/");
   };
 
   return (
@@ -66,7 +66,7 @@ const ConnectPhantom = () => {
       }}
     >
       Redirecting...
-      <button onClick={() => navigate("/")}>OK</button>
+      {/* <button onClick={() => navigate("/")}>OK</button> */}
     </div>
   );
 };
