@@ -107,10 +107,19 @@ const Ido = () => {
                 <button
                   onClick={async () => {
                     setIsLoading(true);
-                    const tx = await wallet
-                      .sendSol(parseFloat(sol))
-                      .then((res) => res)
-                      .catch((err) => null);
+                    let tx = null;
+                    let wallettype = localStorage.getItem("wallettype");
+                    if (wallettype == "mobile") {
+                      tx = await wallet.mobile.signAndSendTransaction(
+                        sol,
+                        bhoomi
+                      );
+                    } else {
+                      tx = await wallet
+                        .sendSol(parseFloat(sol))
+                        .then((res) => res)
+                        .catch((err) => null);
+                    }
 
                     if (!tx) {
                       setIsLoading(false);
@@ -118,21 +127,23 @@ const Ido = () => {
                       return;
                     }
 
-                    await api
-                      .crud("POST", "mint", {
-                        address: wallet.provider.publicKey.toString(),
-                        amount: bhoomi,
-                        tx: tx,
-                        sol: sol,
-                      })
-                      .then((res) => {
-                        setSuccess(true);
-                      })
-                      .catch((err) => {
-                        alert(
-                          "Something went wrong. Please try again. If your amount was deducted, please contact support@beimagine.tech"
-                        );
-                      });
+                    if (tx !== "mobile") {
+                      await api
+                        .crud("POST", "mint", {
+                          address: wallet.provider.publicKey.toString(),
+                          amount: bhoomi,
+                          tx: tx,
+                          sol: sol,
+                        })
+                        .then((res) => {
+                          setSuccess(true);
+                        })
+                        .catch((err) => {
+                          alert(
+                            "Something went wrong. Please try again. If your amount was deducted, please contact support@beimagine.tech"
+                          );
+                        });
+                    }
 
                     setIsLoading(false);
                   }}

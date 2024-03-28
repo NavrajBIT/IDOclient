@@ -12,6 +12,27 @@ const Navbar = () => {
     backgroundColor: "transparent",
   });
 
+  const getAddress = () => {
+    if (!wallet.isWalletConnected) {
+      return "Connect Wallet";
+    }
+
+    let wallettype = localStorage.getItem("wallettype");
+
+    if (wallettype == "browser") {
+      return `${wallet?.provider?.publicKey
+        .toString()
+        .slice(0, 4)}...${wallet?.provider?.publicKey.toString().slice(39)}`;
+    }
+    if (wallettype == "mobile") {
+      return `${wallet?.mobile?.publicKey
+        .toString()
+        .slice(0, 4)}...${wallet?.mobile?.publicKey.toString().slice(39)}`;
+    }
+
+    return "Connect Wallet";
+  };
+
   const openMobileNav = () => {
     if (mobileNavElement.current)
       mobileNavElement.current.style.width = "250px";
@@ -72,13 +93,7 @@ const Navbar = () => {
           className="walletBtn"
           onMouseEnter={() => setIsDropdownOpen(true)}
         >
-          {wallet.isWalletConnected
-            ? `${wallet?.provider?.publicKey
-                .toString()
-                .slice(0, 4)}...${wallet?.provider?.publicKey
-                .toString()
-                .slice(39)}`
-            : "Connect Wallet"}
+          {getAddress()}
         </button>
         <img
           src="/hamburger.png"
@@ -132,13 +147,7 @@ const Navbar = () => {
           style={{ marginTop: "1rem" }}
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
-          {wallet.isWalletConnected
-            ? `${wallet?.provider?.publicKey
-                .toString()
-                .slice(0, 4)}...${wallet?.provider?.publicKey
-                .toString()
-                .slice(39)}`
-            : "Connect Wallet"}
+          {getAddress()}
         </button>
         {isDropdownOpen && !wallet.isWalletConnected && (
           <div className="dropdown mobileDropdown">

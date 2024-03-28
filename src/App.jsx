@@ -10,6 +10,9 @@ import Slide6 from "./Components/Airdrop/Slide6";
 import LastSlide from "./Components/Airdrop/LastSlide";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import ConnectPhantom from "./Components/walletRedirect/connectPhantom";
+import ConnectSolflare from "./Components/walletRedirect/connectSolflare";
+import Tx from "./Components/walletRedirect/tx";
 import { WalletProvider } from "./Contexts/walletContext";
 
 import { createContext } from "react";
@@ -35,6 +38,12 @@ function App() {
           <Route path="/airdrop/slide5" element={<Slide5 />} />
           <Route path="/airdrop/slide6" element={<Slide6 />} />
           <Route path="/airdrop/lastSlide" element={<LastSlide />} />
+          <Route path="/wallet/connect/phantom" element={<ConnectPhantom />} />
+          <Route
+            path="/wallet/connect/solflare"
+            element={<ConnectSolflare />}
+          />
+          <Route path="/wallet/tx/:sol/:bhoomi" element={<Tx />} />
         </Routes>
         <Footer />
       </WalletProvider>

@@ -4,6 +4,7 @@ import * as web3 from "@solana/web3.js";
 import useAPI from "../Components/useAPI";
 import * as buffer from "buffer";
 window.Buffer = buffer.Buffer;
+import Mobilewallet from "./mobilewallet";
 
 const WalletContext = React.createContext();
 
@@ -20,6 +21,7 @@ export function WalletProvider(props) {
   const [bhoomibalance, setBhoomibalance] = useState(0);
   const [supplydata, setSupplyData] = useState(null);
   const [contractAddress, setContractAddress] = useState(null);
+  const mobile = Mobilewallet();
 
   // let connection = new web3.Connection("https://api.mainnet-beta.solana.com/");
   let connection = new web3.Connection(
@@ -30,9 +32,18 @@ export function WalletProvider(props) {
   useEffect(() => {
     try {
       let wallet = localStorage.getItem("wallet");
+      let wallettype = localStorage.getItem("wallettype");
       console.log(wallet);
-      if (wallet === "phantom") connect();
-      if (wallet === "solflare") connectSolflare();
+      if (wallet === "phantom") {
+        if (wallettype == "browser") {
+          connect();
+        }
+      }
+      if (wallet === "solflare") {
+        if (wallettype == "browser") {
+          connectSolflare();
+        }
+      }
     } catch {}
   }, []);
 
@@ -120,6 +131,7 @@ export function WalletProvider(props) {
           setProvider(solflareWallet);
           setIsWalletConnected(true);
           localStorage.setItem("wallet", "solflare");
+          localStorage.setItem("wallettype", "browser");
         });
         await solflareWallet.connect();
       } catch {
@@ -127,7 +139,11 @@ export function WalletProvider(props) {
         alert("Wallet connection declined!");
       }
     } else {
-      window.open("https://solflare.com/", "_blank");
+      try {
+        mobile.connectWithMobileApp(true);
+      } catch {
+        window.open("https://solflare.com/", "_blank");
+      }
     }
   };
 
@@ -140,6 +156,7 @@ export function WalletProvider(props) {
         console.log("request processed...");
         setPublicKey(resp.publicKey);
         localStorage.setItem("wallet", "phantom");
+        localStorage.setItem("wallettype", "browser");
         setProvider(myprovider);
         setIsWalletConnected(true);
       } catch {
@@ -147,7 +164,11 @@ export function WalletProvider(props) {
         alert("Wallet connection declined!");
       }
     } else {
-      window.open("https://phantom.app/", "_blank");
+      try {
+        mobile.connectWithMobileApp();
+      } catch {
+        window.open("https://phantom.app/", "_blank");
+      }
     }
   };
 
@@ -207,6 +228,7 @@ export function WalletProvider(props) {
     provider,
     sendSol,
     isWalletConnected,
+    setIsWalletConnected,
     solbalance,
     connect,
     connectSolflare,
@@ -215,6 +237,7 @@ export function WalletProvider(props) {
     supplydata,
     disconnect,
     contractAddress,
+    mobile,
   };
 
   return (
