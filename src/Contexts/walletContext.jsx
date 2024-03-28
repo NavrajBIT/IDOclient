@@ -69,11 +69,10 @@ export function WalletProvider(props) {
   }, [provider]);
 
   const getBalance = async (address = provider?.publicKey) => {
-    if (!provider) return;
+    // if (!provider && !mobile.publicKey) return;
+
     if (!contractAddress) return;
-
     let wallettype = localStorage.getItem("wallettype");
-
     let myaddress = "";
     if (wallettype === "mobile") {
       myaddress = mobile.publicKey;
