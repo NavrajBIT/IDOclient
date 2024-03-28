@@ -73,12 +73,14 @@ export function WalletProvider(props) {
 
     if (!contractAddress) return;
     let wallettype = localStorage.getItem("wallettype");
+    console.log(wallettype);
     let myaddress = "";
     if (wallettype === "mobile") {
       myaddress = mobile.publicKey;
     } else {
       myaddress = provider?.publicKey?.toString();
     }
+    console.log(myaddress);
 
     await api
       .crud(
