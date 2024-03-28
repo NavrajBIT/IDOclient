@@ -71,12 +71,22 @@ export function WalletProvider(props) {
   const getBalance = async (address = provider?.publicKey) => {
     if (!provider) return;
     if (!contractAddress) return;
+
+    let wallettype = localStorage.getItem("wallettype");
+
+    let myaddress = "";
+    if (wallettype === "mobile") {
+      myaddress = mobile.publicKey;
+    } else {
+      myaddress = provider?.publicKey?.toString();
+    }
+
     await api
       .crud(
         "POST",
         "getbhoomibalance",
         {
-          address: provider?.publicKey?.toString(),
+          address: myaddress,
         },
         true
       )
