@@ -12,7 +12,7 @@ import {
 } from "@solana/web3.js";
 
 const Mobilewallet = () => {
-  const dappKeyPair = nacl.box.keyPair();
+  //   const dappKeyPair = nacl.box.keyPair();
   const [publicKey, setPublicKey] = useState(null);
   const [sharedSecret, setSharedSecret] = useState(null);
   const [session, setSession] = useState(null);
@@ -23,15 +23,15 @@ const Mobilewallet = () => {
   );
   //   const connection = new Connection("https://api.devnet.solana.com");
 
-  //   const newpublicKey = new Uint8Array([
-  //     132, 175, 111, 28, 47, 172, 248, 2, 124, 119, 76, 146, 190, 183, 1, 33, 38,
-  //     151, 186, 89, 74, 151, 175, 108, 226, 90, 184, 87, 161, 193, 34, 24,
-  //   ]);
-  //   const secretKey = new Uint8Array([
-  //     160, 222, 205, 219, 231, 240, 192, 121, 62, 119, 66, 161, 245, 123, 84, 58,
-  //     178, 183, 74, 215, 39, 16, 42, 127, 101, 126, 208, 124, 23, 117, 115, 208,
-  //   ]);
-  //   const dappKeyPair = { publicKey: newpublicKey, secretKey: secretKey };
+  const newpublicKey = new Uint8Array([
+    132, 175, 111, 28, 47, 172, 248, 2, 124, 119, 76, 146, 190, 183, 1, 33, 38,
+    151, 186, 89, 74, 151, 175, 108, 226, 90, 184, 87, 161, 193, 34, 24,
+  ]);
+  const secretKey = new Uint8Array([
+    160, 222, 205, 219, 231, 240, 192, 121, 62, 119, 66, 161, 245, 123, 84, 58,
+    178, 183, 74, 215, 39, 16, 42, 127, 101, 126, 208, 124, 23, 117, 115, 208,
+  ]);
+  const dappKeyPair = { publicKey: newpublicKey, secretKey: secretKey };
 
   function connectWithMobileApp(isSolflare = false) {
     const appUrl = "https://bitbhoomiido.tech/";
